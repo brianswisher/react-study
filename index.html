@@ -9,17 +9,28 @@
 <script type="text/jsx">
   /*** @jsx React.DOM */
   var APP = React.createClass({
+    getDefaultProps:function(){
+      return {
+        txt:'asdfadsf',
+        cat:0
+      }
+    },
+    propTypes:{
+      txt:React.PropTypes.string,
+      cat:React.PropTypes.number.isRequired
+    },
     render:function(){
+      console.log(this.props.txt)
       return (
           <div>
-            <h1>Hello World</h1>
+            <h1>{this.props.txt}</h1>
             <b>bold</b>
           </div>
         )
     }
   });
 
-  React.renderComponent(<APP />,document.body)
+  React.renderComponent(<APP cat={5} />,document.body)
 
 </script>
 </body>

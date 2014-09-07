@@ -19,12 +19,18 @@
       txt:React.PropTypes.string,
       cat:React.PropTypes.number.isRequired
     },
+    getInitialState:function(){
+      return {txt:'',id:0}
+    },
+    updateTxt:function(e){
+      this.setState({txt:e.target.value})
+    },
     render:function(){
       console.log(this.props.txt)
       return (
           <div>
-            <h1>{this.props.txt}</h1>
-            <b>bold</b>
+            <input type="text" onChange={this.updateTxt} />
+            <h1>{this.state.txt}</h1>
           </div>
         )
     }

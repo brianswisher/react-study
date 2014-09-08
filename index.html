@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>props.children</title>
+  <title>transferPropsTo</title>
   <link rel="stylesheet"
     href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" />
   <script src="http://fb.me/react-0.8.0.js"></script>
@@ -17,7 +17,14 @@
     React.createClass({
       render:function(){
         return(
-            <BButton>I <BHeart /> React</BButton>
+            <div>
+              <BButton href="javascript:alert('hello')" className="btn-primary">
+              <BIcon className="glyphicon-heart" /> Button</BButton>
+              <BButton href="javascript:alert('hello')" className="btn-success">
+              <BIcon className="glyphicon-pencil" /> Button</BButton>
+              <BButton href="javascript:alert('hello')" className="btn-danger">
+              <BIcon className="glyphicon-inbox" /> Button</BButton>
+            </div>
           )
       }
     });
@@ -26,17 +33,17 @@
     React.createClass({
       render:function(){
         return(
-            <a className="btn btn-primary">{this.props.children}</a>
+            this.transferPropsTo(<a className="btn">{this.props.children}</a>)
           )
       }
     });
 
 
-  var BHeart =
+  var BIcon =
     React.createClass({
       render:function(){
         return(
-            <span className="glyphicon glyphicon-heart"></span>
+            this.transferPropsTo(<span className="glyphicon"></span>)
           )
       }
     });

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Component Lifecycle: Mounting</title>
+  <title>Component Lifecycle: Updating</title>
   <script src="bower_components/react/react.min.js"></script>
   <script src="bower_components/react/JSXTransformer.js"></script>
   <style>
@@ -10,40 +10,41 @@
   </style>
 </head>
 <body>
-<button onClick="render()">Render</button>
-<button onClick="unmount()">Unmount</button>
-<hr/>
 <div id="panel"></div>
 <script type="text/jsx">
   /*** @jsx React.DOM */
   var APP = React.createClass({
+    getInitialState:function(){
+      return {increasing:false};
+    },
     update:function(){
       var newVal = this.props.val+1;
-      this.setProps({val:newVal})
+      this.setProps({val:newVal});
     },
-    componentWillMount:function(){
-      console.log("here i go")
+    componentWillReceiveProps:function(nextProps){
+      this.setState({increasing:nextProps.val>this.props.val});
+    },
+    shouldComponentUpdate:function(nextProps, nextState){
+      return nextProps.val % 5 === 0;
+    },
+    componentWillUpdate:function(nextProps, nextState){
+      console.log("nextProps ==="+JSON.stringify(nextProps));
     },
     render:function(){
-      console.log('hello world');
+      console.log(this.state.increasing);
       return(
-          <button onClick={this.update}>{this.props.val}</button>
+          <button
+            onClick={this.update}>
+            {this.props.val}
+          </button>
         )
     },
-    componentDidMount:function(){
-      console.log("nice place you got here")
-    },
-    componentWillUnmount:function(){
-      console.log("goodbye cruel world!")
+    componentDidUpdate:function(prevProps, prevState){
+      console.log("prevProps ==="+JSON.stringify(prevProps))
     }
   });
 
-  window.render = function(){
-    React.renderComponent(<APP val={0} />,document.getElementById('panel'))
-  }
-  window.unmount = function(){
-    React.unmountComponentAtNode(document.getElementById('panel'))
-  }
+  React.renderComponent(<APP val={0} />,document.getElementById('panel'))
 
 </script>
 </body>

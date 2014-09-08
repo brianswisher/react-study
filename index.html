@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Component Lifecycle: Mounting</title>
+  <title>Component Lifecycle: Mounting Usage</title>
   <script src="bower_components/react/react.min.js"></script>
   <script src="bower_components/react/JSXTransformer.js"></script>
   <style>
@@ -22,19 +22,28 @@
       this.setProps({val:newVal})
     },
     componentWillMount:function(){
-      console.log("here i go")
+      this.setState({m:2});
+      if(this.props.val===0){
+        this.btnStyle = {'color':'red'}
+      }
     },
     render:function(){
       console.log('hello world');
       return(
-          <button onClick={this.update}>{this.props.val}</button>
+          <button
+            style={this.btnStyle}
+            onClick={this.update}>
+            {this.props.val*this.state.m}
+          </button>
         )
     },
     componentDidMount:function(){
-      console.log("nice place you got here")
+      // console.log(this.getDOMNode())
+      this.inc = setInterval(this.update,500)
     },
     componentWillUnmount:function(){
       console.log("goodbye cruel world!")
+      clearInterval(this.inc)
     }
   });
 

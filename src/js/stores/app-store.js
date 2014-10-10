@@ -54,6 +54,15 @@ function _addItem(item){
   }
 }
 
+function _cartTotals(){
+  var qty = 0, total = 0;
+  _cartItems.forEach(function(cartItem){
+    qty+=cartItem.qty;
+    total+=cartItem.qty*cartItem.cost;
+  })
+  return {'qty':qty, 'total':total};
+}
+
 var AppStore = merge(EventEmitter.prototype,{
   emitChange:function(){
     this.emit(CHANGE_EVENT);
@@ -69,6 +78,9 @@ var AppStore = merge(EventEmitter.prototype,{
   },
   getCatalog:function(){
     return _catalog;
+  },
+  getCartTotals:function(){
+    return _cartTotals();
   },
   dispatcherIndex:AppDispatcher.register(function(payload){
     var action = payload.action; // this is our action from handleViewAction
